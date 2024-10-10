@@ -215,11 +215,11 @@ Now, we can use dynamic programming to find the optimal strategy. We can start a
 
 We know that the 2 bullets are loaded consecutively, and in the current situation, we have already shot an empty round. The first round being empty means that the first bullet was not in the first or the last slot. This means that we must be in one of the 4 slots initially. \\
 
-The probability that the next round is a bullet is then the probability that the first bullet is in one of the even slots, which is $\frac{1}{4}$. \\
+The probability that the next round is a bullet is then the probability that the first bullet is in one of the 4 slots, which is $\frac{1}{4}$. \\
 
 If we decide to spin the barrel before shooting, the probability of the bullet being in the next chamber is $\frac{2}{6}$ = $\frac{1}{3}$. \\
 
-Hence, spinning the barrel before shooting is worse, as it lowers the probability of the bullet being in the next chamber.
+Hence, spinning the barrel before shooting is worse, as it increases the probability of the bullet being in the next chamber.
 
 
 \vspace{10mm}

@@ -1,0 +1,401 @@
+\documentclass[a4paper]{article}
+\setlength{\topmargin}{-1.0in}
+\setlength{\oddsidemargin}{-0.2in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textheight}{10.5in}
+\setlength{\textwidth}{6.5in}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage[dvipsnames] {xcolor}
+\usepackage{mathpartir}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\hbadness=10000
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Assignment 2},
+    pdfpagemode=FullScreen,
+    }
+\def\endproofmark{$\Box$}
+\newenvironment{proof}{\par{\bf Proof}:}{\endproofmark\smallskip}
+
+% Define a custom style for Python code
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    showstringspaces=false,
+    frame=single,
+    rulecolor=\color{black!30},
+    tabsize=4,
+    captionpos=b
+}
+
+\begin{document}
+\begin{center}
+{\large \bf \color{red}  Department of Computer Science} \\
+{\large \bf \color{red}  Ashoka University} \\
+
+\vspace{0.1in}
+
+{\large \bf \color{blue}  Introdution to Quantitative Finance}
+
+\vspace{0.05in}
+
+    { \bf \color{YellowOrange} Assignment 4}
+\end{center}
+\medskip
+
+\hfill {\textbf{Name: Rushil Gupta} }
+
+\bigskip
+\hrule
+
+
+\section*{Question 1}
+
+
+\begin{enumerate}[label=(\alph*)]
+    \item The assertion "market is complete" implies that the number of \textbf{elementary} securities is greater than or equal to the number of states of the world. This is because for a market to be complete, there must be enough elementary securities to replicate any payoff in any state of the world. Therefore, the correct answer is:
+    
+    (iii) $r(A) = m$.
+
+    \vspace{5mm}
+    \item When there are more securities than states of the world, we cannot comment on the completeness of the market. This is because what matters is the number of elementary, or, linearly independent securities, not the total number of securities. If there are more securities than states of the world, some of the securities will be redundant and the market will not be complete. Therefore, the correct answer is:
+    
+    (i) Some securities are redundant.
+
+    \vspace{5mm}
+    \item The number of redundant securities is given by $n - r(A)$. This is because there are $n$ securities and $r(A)$ is the number of linearly independent securities. So, exactly $n - r(A)$ securities are linear combinations of the $r(A)$ linearly independent securities. Therefore, the correct answer is:
+
+    (iii) $n - r(A)$.
+
+    \vspace{5mm}
+    \item If $A$ has full rank, then $r(A) = min(m, n)$. This means that the market is complete, only when $m \geq n$. Similarly, there are no redundant securities only when $m \leq n$. Therefore, the correct answer is:
+
+    (iii) Sometimes (i), sometimes (ii), and sometimes both.
+\end{enumerate}
+
+
+\vspace{15mm}
+\section*{Question 2}
+\begin{enumerate}[label=(\alph*)]
+    \item We know arbitrage exists if there exists a non-zero vector $\theta$ such that:
+
+    \[ S^{T}\theta \leq 0 \quad \text{and} \quad A\theta \geq 0 \quad \text{and} \quad A\theta \neq 0 \]
+
+    This gives us the following system of equations:
+
+    \[ 2\theta_{1} + \theta_{2} + 0.5\theta_{3} \leq 0 \]
+    \[ 2\theta_{1} + \theta_{2} + \theta_{3} \geq 0 \]
+    \[ \theta_{1} + \theta_{2} \geq 0 \]
+    \[ \theta_{2} - \theta_{3} \geq 0 \]
+
+    Since $\theta_{2}$ and $\theta_{3}$ are free variables, we can set $\theta_{2} = 1$ and $\theta_{3} = 1$ arbitrarily. This gives us:
+
+    \[ 2\theta_{1} + 1 + 0.5 \leq 0 \Rightarrow 2\theta_{1} \leq -1.5 \Rightarrow \theta_{1} \leq -0.75 \]
+    \[ 2\theta_{1} + 1 + 1 \geq 0 \Rightarrow 2\theta_{1} \geq -2 \Rightarrow \theta_{1} \geq -1 \]
+
+    The other 2 equations are satisfied trivially.
+
+    Now, we can see that $\theta_{1}$ can take any value in the interval $[-1, -0.75]$. For now, let's set $\theta_{1} = 0.75$. This gives us:
+
+    \[ \theta = \begin{bmatrix} 0.75 \\ 1 \\ 1 \end{bmatrix} \]
+
+    This is a non-zero vector that satisfies all the conditions for arbitrage. Therefore, arbitrage exists in this market.
+
+    Now, we need to check if positive state prices exist. Before that, recall that positive state prices exist if and only if there is no-arbitrage, so we know that positive state prices do not exist in this market. However, let's check it formally.
+
+    The relationship between state prices $\pi$ and $A$ and $S$ is given by:
+
+    \[ S = A^{T}\pi \]
+
+    Now, looking at $A^{T}$, we can see that the first and second rows are linearly dependent. This means that $A^{T}$ is not of full rank, and hence, not invertible. Therefore, positive state prices do not exist in this market.
+
+
+    \vspace{10mm}
+
+    \item To formally find arbitrage opportunities, we need to show that there exists a non-zero vector $\theta$ such that:
+
+    \[ S^{T}\theta \leq 0 \quad \text{and} \quad A\theta \geq 0 \quad \text{and} \quad A\theta \neq 0 \]
+
+    This gives us the following system of equations:
+
+    \[ \theta_{1} + \theta_{2} + 2\theta_{3} + 3\theta_{4} \leq 0 \]
+    \[ 2\theta_{1} + \theta_{2} + 3\theta_{4} \geq 0 \]
+    \[ \theta_{1} + \theta_{2} + \theta_{3} + 2\theta_{4} \geq 0 \]
+    \[ \theta_{2} + 2\theta_{3} \geq 0 \]
+
+    Now, since $\theta_{3}$ and $\theta_{4}$ are free variables, we can set $\theta_{3} = \frac{1}{2}$ and $\theta_{4} = -1$ arbitrarily. This gives us:
+
+    \[ \theta_{1} + \theta_{2} + 1 - 3 \leq 0 \Rightarrow \theta_{1} + \theta_{2} \leq 2 \]
+    \[ 2\theta_{1} + \theta_{2} - 3 \geq 0 \Rightarrow 2\theta_{1} + \theta_{2} \geq 3 \]
+    \[ \theta_{1} + \theta_{2} + 0.5 - 2 \geq 0 \Rightarrow \theta_{1} + \theta_{2} \geq 1.5 \]
+    \[ \theta_{2} + 1 \geq 0 \Rightarrow \theta_{2} \geq -1 \]
+
+    From the first and third inequalities, we can see that:
+
+    \[ 1.5 \leq \theta_{1} + \theta_{2} \leq 2 \]
+
+    Now, take $\theta_{1} = 1.5$. Then, from the first inequality, we get:
+
+    \[ 1.5 + \theta_{2} \leq 2 \Rightarrow \theta_{2} \leq 0.5 \]
+
+    From the second inequality, we get:
+
+    \[ 3 + \theta_{2} \geq 3 \Rightarrow \theta_{2} \geq 0 \]
+
+    So, we can set $\theta_{2} = 0.5$. This gives us:
+
+    \[ \theta = \begin{bmatrix} 1.5 \\ 0.5 \\ 0.5 \\ -1 \end{bmatrix} \]
+
+    The cost of the portfolio is $S^{T}\theta = 0$, while the payoff is $A\theta = \begin{bmatrix} 0.5 \\ 0.5 \\ 1.5 \end{bmatrix}$, which has all positive components. Therefore, arbitrage exists for all the $m$ states.
+
+
+    Now, we need to check if positive state prices exist. The relationship between state prices $\pi$ and $A$ and $S$ is given by:
+
+    \[ S = A^{T}\pi \]
+
+    Now, looking at $A^{T}$, we can see that the it has 4 rows and 3 columns. This means that $A^{T}$ is not of full rank, and hence, not invertible. Therefore, state prices do not exist in this market, which means positive state prices do not exist in this market.
+
+
+    \vspace{10mm}
+    \item Note that $A$ has 3 rows and 2 columns. This means that the market has 3 states and 2 securities. Since the number of states is greater than the number of securities, the market is incomplete. To find arbitrage opportunities, we need to find a non-zero vector $\theta$ such that:
+
+    \[ S^{T}\theta \leq 0 \quad \text{and} \quad A\theta \geq 0 \quad \text{and} \quad A\theta \neq 0 \]
+
+    This gives us the following system of equations:
+
+    \[ \theta_{1} + 1001\theta_{2} \leq 0 \]
+    \[ 2\theta_{1} + \theta_{2} \geq 0 \]
+    \[ \theta_{1} + \theta_{2} \geq 0 \]
+    \[ 2\theta_{2} \geq 0 \]
+
+    Now, since $\theta_{2}$ is free, we can set $\theta_{2} = 1$ arbitrarily. This gives us:
+
+    \[ \theta_{1} + 1001 \leq 0 \Rightarrow \theta_{1} \leq -1001 \]
+    \[ 2\theta_{1} + 1 \geq 0 \Rightarrow 2\theta_{1} \geq -1 \Rightarrow \theta_{1} \geq -\frac{1}{2} \]
+
+    Note that we now get a contradiction in the first and second inequalities. This means that no arbitrage opportunities exist in this market. Now, we need to check if positive state prices exist. The relationship between state prices $\pi$ and $A$ and $S$ is given by:
+
+    \[ S = A^{T}\pi \]
+
+    Solving the above, we get:
+
+    \[ \left[\begin{array}{ccc|c}
+        2 & 1 & 0 & 1 \\ 
+        0 & 1 & 2 & 1001
+    \end{array}\right] \]
+
+
+    \[ \sim \left[\begin{array}{ccc|c}
+        1 & 0 & -1 & -500 \\ 
+        0 & 1 & 2 & 1001
+    \end{array}\right] \]
+
+    Since we want the state prices to be positive, we can set $\pi_{3} = t$. This gives us:
+
+    \[ \pi = \begin{bmatrix} -500 + t \\ 1001 - 2t \\ t \end{bmatrix} \]
+
+    This gives $t \in (500, 500.5)$. So, positive state prices exist, but they are not unique. This further shows that arbitrage does not exist in this market.
+\end{enumerate}
+
+
+\newpage
+\section*{Question 3}
+\begin{enumerate}[label=(\alph*)]
+    \item The riskless bond can be identified by looking at $A$. The last column of $A$ has all $3$'s, which means that no matter what state we are in, the payoff of the instrument is always $3$. Therefore, it must be the riskless bond. The return on the riskless bond is given by:
+
+    \[ \frac{S_{1} - S_{0}}{S_{0}} = \frac{3 - 2}{2} = \frac{1}{2} = 50\% \]
+
+    \vspace{5mm}
+    \item The state prices $\pi$ are given by:
+
+    \[ S = A^{T}\pi \]
+
+    Solving the above, we get:
+    \[ \left[\begin{array}{cccc|c}
+        1 & 0 & 0 & 1 & 1/3 \\ 
+        0 & 1 & 2 & 0 & 1/2 \\ 
+        3 & 3 & 3 & 3 & 2
+    \end{array}\right] \]
+
+    \[ \sim \left[\begin{array}{cccc|c}
+        1 & 0 & 0 & 1 & 1/3 \\ 
+        0 & 1 & 2 & 0 & 1/2 \\ 
+        0 & 3 & 3 & 0 & 1
+    \end{array}\right] \]
+
+    \[ \sim \left[\begin{array}{cccc|c}
+        1 & 0 & 0 & 1 & 1/3 \\ 
+        0 & 1 & 2 & 0 & 1/2 \\ 
+        0 & 0 & -3 & 0 & -1/2
+    \end{array}\right] \]
+
+    \[ \sim \left[\begin{array}{cccc|c}
+        1 & 0 & 0 & 1 & 1/3 \\ 
+        0 & 1 & 0 & 0 & 1/6 \\ 
+        0 & 0 & 1 & 0 & 1/6
+    \end{array}\right] \]
+
+
+    Notice that $\pi_{4}$ is free. So, we can set $\pi_{4} = t$. This gives us:
+
+    \[ \pi = \begin{bmatrix} 1/3 - t \\ 1/6 \\ 1/6 \\ t \end{bmatrix} \]
+
+    The state prices are positive if and only if $t \in (0, 1/3)$, and are clearly not unique.
+
+
+    \vspace{10mm}
+    \item In this model, the market is not complete since we have 4 possible states of the world and only 3 securities. This is also visible from the fact that there are multiple positive state prices.
+    
+    \vspace{10mm}
+    \item Recall that the risk-neutral probabilities $q_{i}$ are given by:
+
+    \[ q_{i} = \frac{\pi_{i}}{\sum_{j=1}^{m} \pi_{j}} \]
+
+    First, we calculate the denominator:
+
+    \[ \sum_{j=1}^{m} \pi_{j} = \left(\frac{1}{3} - t\right) + \frac{1}{6} + \frac{1}{6} + t = \frac{1}{3} + \frac{1}{3} = \frac{2}{3} \]
+
+    Then, the risk-neutral probabilities $Q$ are:
+
+    \[ Q = \begin{bmatrix} 1.5 \cdot (1/3 - t) \\ 1.5 \cdot (1/6) \\ 1.5 \cdot (1/6) \\ 1.5 \cdot t \end{bmatrix} = \begin{bmatrix} 0.5 - 1.5t \\ 0.25 \\ 0.25 \\ 1.5t \end{bmatrix} \]
+
+    \vspace{5mm}
+    \item The price of any asset at $T = 0$ is given by:
+
+    \begin{align*}
+        S_{0} &= S_{1} \pi \\
+              &= 1 \cdot (1/3 - t) + 2 \cdot (1/6) + 0 \cdot (1/6) + 1 \cdot t \\
+              &= 1/3 - t + 1/3 + t \\
+              &= 2/3
+    \end{align*}
+
+    So, the price of the new asset is $2/3$.
+\end{enumerate}
+
+\vspace{10mm}
+\section*{Question 4}
+
+Using the Black-Scholes formula, the price of the put option is given by:
+
+\[ P = K e^{-rT} N(-d_{2}) - S N(-d_{1}) \]
+
+where $d_{1}$ and $d_{2}$ are given by:
+
+\[ d_{1} = \frac{\ln(S/K) + (r + \sigma^{2}/2)T}{\sigma \sqrt{T}} \]
+\[ d_{2} = d_{1} - \sigma \sqrt{T} \]
+
+Substituting the given values, we get:
+
+\[ d_{1} = \frac{\ln(50/50) + (0.1 + 0.3^{2}/2) \cdot 0.25}{0.3 \sqrt{0.25}} = 0.2417 \]
+\[ d_{2} = 0.2417 - 0.3 \sqrt{0.25} = 0.0917 \]
+
+Now, using a normal distribution table, we can find that:
+
+\[ N(-d_{1}) = 0.4045 \]
+\[ N(-d_{2}) = 0.4635 \]
+
+Therefore, the price of the put option is:
+
+\[ P = 50 e^{-0.1 \cdot 0.25} \cdot 0.4635 - 50 \cdot 0.4045 \approx \$2.38 \]
+
+So, the price of the put option is approximately \$2.38.
+
+\vspace{10mm}
+\section*{Question 5}
+% What is the price of a European put option on a non-dividend-paying stock when the stock price is $69, the strike price is $70, the risk-free interest rate is 5% per annum, the volatility is 35% per annum, and the time to maturity is 6 months?
+Again, using the Black-Scholes formula, the price of the put option is given by:
+
+\[ P = K e^{-rT} N(-d_{2}) - S N(-d_{1}) \]
+
+Using our values, we get:
+
+\[ d_{1} = \frac{\ln(69/70) + (0.05 + 0.35^{2}/2) \cdot 0.5}{0.35 \sqrt{0.5}} = 0.166 \]
+\[ d_{2} = 0.166 - 0.35 \sqrt{0.5} = -0.0809 \]
+
+Now, using a normal distribution table, we can find that:
+
+\[ N(-d_{1}) = 0.4341 \]
+\[ N(-d_{2}) = 0.4678 \]
+
+Therefore, the price of the put option is:
+
+\[ P = 70 e^{-0.05 \cdot 0.5} \cdot 0.4678 - 69 \cdot 0.4341 \approx \$1.98 \]
+
+So, the price of the put option is approximately \$1.98.
+
+
+\newpage
+\section*{Question 6}
+% A call option on a non-dividend-paying stock has a market price of $2.5. The stock price is $15, the exercise price is $13, the time to maturity is 3 months, and the risk-free interest rate is 5% per annum. What is the implied volatility?
+
+To solve this problem, we will use the Black-Scholes formula for the price of a call option:
+
+\[ C = S N(d_{1}) - K e^{-rT} N(d_{2}) \]
+
+Now, we will use python to find the implied volatility such that the Black-Scholes price matches the given market price by converting the problem to a root-finding problem (black-scholes price - market price = 0).
+
+\vspace{5mm}
+\begin{lstlisting}[style=pythonstyle, caption=Black-Scholes Implied Volatility Calculator]
+import math
+from scipy.stats import norm
+from scipy.optimize import brentq
+
+def black_scholes_call(S, K, T, r, sigma):
+    d1 = (math.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
+    d2 = d1 - sigma * math.sqrt(T)
+    call_price = S * norm.cdf(d1) - K * math.exp(-r * T) * norm.cdf(d2)
+    return call_price
+
+def option_price_difference(sigma, S, K, T, r, market_price):
+    return black_scholes_call(S, K, T, r, sigma) - market_price
+
+# Market parameters
+S = 15
+K = 13
+T = 0.25
+r = 0.05
+market_price = 2.5
+
+sigma_lower = 0.0001
+sigma_upper = 5.0
+
+try:
+    # Find the implied volatility using Brent's method
+    implied_vol = brentq(
+        option_price_difference,
+        sigma_lower,
+        sigma_upper,
+        args=(S, K, T, r, market_price),
+        xtol=1e-10,  # Tolerance for convergence
+    )
+    print(f"The implied volatility is {implied_vol:.4%}")
+except ValueError:
+    print("Implied volatility not found within the given bounds.")
+\end{lstlisting}
+
+The output of the above code is:
+
+\vspace{5mm}
+The implied volatility is 39.6436\%.
+
+\end{document}
